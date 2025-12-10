@@ -1,33 +1,32 @@
 from vispy import app, scene
 from vispy.app import Timer
 import numpy as np
-from physics import diffuse
+#from physics import diffuse
+from .particles import Particles
 
+class Visualization:
+    def __init__(self):
     
-canvas = scene.SceneCanvas(keys="interactive", show=True)
-canvas.title = "Particle Life"
+        canvas = scene.SceneCanvas(keys="interactive", show=True)
+        canvas.title = "Particle Life"
 
-view = canvas.central_widget.add_view()
+        view = canvas.central_widget.add_view()
 
-view.camera = scene.cameras.PanZoomCamera(aspect=1)
+        view.camera = scene.cameras.PanZoomCamera(aspect=1)
 
-n_points = 1000
-x = np.random.normal(loc=0.0, scale=10.0, size=n_points)
-y = np.random.normal(loc=0.0, scale=10.0, size=n_points)
+        particles = Particles()
+        x, y = particles.x, particles.y
 
-scatter = scene.visuals.Markers()
-scatter.set_data(np.array([x, y]).T, face_color="cyan", size=5)
-view.add(scatter)
+        scatter = scene.visuals.Markers()
+        scatter.set_data(np.array([x, y]).T, face_color="cyan", size=5)
+        view.add(scatter)
+        #app.run()
 
 
-def update(event):
-    global x, y
-    x, y = diffuse(x, y, 0.2)
-    scatter.set_data(np.array([x, y]).T, face_color="cyan", size=5)
+    def update(self, event):
+        global x, y
+        x, y = diffuse(x, y, 0.2)
+        self.scatter.set_data(np.array([x, y]).T, face_color="cyan", size=5)
     
     
-timer = Timer(interval=0.02, connect=update, start=True)
-
-
-if __name__ == "__main__":
-    app.run()
+    timer = Timer(interval=0.02, connect=update, start=True)
