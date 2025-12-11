@@ -2,33 +2,53 @@ from vispy import app, scene
 from vispy.app import Timer
 import numpy as np
 from .particles import Particles
-
 from PyQt5.QtWidgets import QMainWindow
+
 
 class Visualization(QMainWindow):
     def __init__(self):
-        QMainWindow.__init__(self)
-    
+        super().__init__()
+
         self.canvas = scene.SceneCanvas(keys="interactive", show=True)
         self.canvas.title = "Particle Life"
 
         self.view = self.canvas.central_widget.add_view()
-
         self.view.camera = scene.cameras.PanZoomCamera(aspect=1)
 
+        # Partikel
         self.particles = Particles()
-        x, y = self.particles.x, self.particles.y
+        x = self.particles.x
+        y = self.particles.y
+
+        # DEBUG
+        print("x shape:", x.shape)
+        print("y shape:", y.shape)
+        print("combined shape:", np.column_stack((x, y)).shape)
+
 
         self.scatter = scene.visuals.Markers()
-        self.scatter.set_data(np.array([x, y]).T, face_color="cyan", size=5)
-        self.view.add(self.scatter)
-        #app.run()
 
+        positions = np.column_stack((x, y))   # Shape (N, 2) → korrekt für VisPy
+
+        self.scatter.set_data(
+            positions,
+            face_color="cyan",
+            size=5
+        )
+
+        self.view.add(self.scatter)
+
+        self.timer = Timer(interval=0.02, connect=self.update, start=True)
 
     def update(self, event):
-        global x, y
-        x, y = self.diffuse(x, y, 0.2)
-        self.scatter.set_data(np.array([x, y]).T, face_color="cyan", size=5)
-    
-    
-    timer = Timer(interval=0.02, connect=update, start=True)
+        # Partikel bewegen
+        x, y = self.particles.diffuse(0.2)
+
+        positions = np.column_stack((x, y))  # wieder (N, 2)
+
+        # Visual aktualisieren
+        self.scatter.set_data(
+            positions,
+            face_color="cyan",
+            size=5
+        )
