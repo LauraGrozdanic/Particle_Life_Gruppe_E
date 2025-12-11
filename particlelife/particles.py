@@ -9,6 +9,6 @@ class Particles:
 
 
     def diffuse(self, n_step=0.1):
-        self.x += np.random.normal(scale=n_step, size=x.shape)
-        self.y += np.random.normal(scale=n_step, size=y.shape)
+        self.x += np.random.normal(scale=n_step, size=self.x.shape)
+        self.y += np.random.normal(scale=n_step, size=self.y.shape)
         return self.x, self.y
