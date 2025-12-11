@@ -9,8 +9,10 @@ class Visualization(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.canvas = scene.SceneCanvas(keys="interactive", show=True)
+        self.canvas = scene.SceneCanvas(keys="interactive", show=False)
         self.canvas.title = "Particle Life"
+
+        self.setCentralWidget(self.canvas.native) #canvas in das hauptfenster eingesetzt
 
         self.view = self.canvas.central_widget.add_view()
         self.view.camera = scene.cameras.PanZoomCamera(aspect=1)
