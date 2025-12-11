@@ -1,4 +1,5 @@
 import numpy as np
+from .interaction import compute_interaction_direction
 
 class Particles:
     def __init__ (self, n_points=1000):
@@ -11,3 +12,4 @@ class Particles:
         self.x += np.random.normal(scale=n_step, size=x.shape)
         self.y += np.random.normal(scale=n_step, size=y.shape)
         return x, y
+
