@@ -20,6 +20,9 @@ class Visualization(QMainWindow):
         x = self.particles.x
         y = self.particles.y
 
+        types = self.particles.types
+        face_colors = self.particles.colors[types]
+
         # DEBUG
         print("x shape:", x.shape)
         print("y shape:", y.shape)
@@ -32,7 +35,7 @@ class Visualization(QMainWindow):
 
         self.scatter.set_data(
             positions,
-            face_color="cyan",
+            face_color=face_colors,
             size=5
         )
 
@@ -45,10 +48,11 @@ class Visualization(QMainWindow):
         x, y = self.particles.diffuse(0.2)
 
         positions = np.column_stack((x, y))  # wieder (N, 2)
-
+        types = self.particles.types
+        face_colors = self.particles.colors[types]
         # Visual aktualisieren
         self.scatter.set_data(
             positions,
-            face_color="cyan",
+            face_color=face_colors,
             size=5
         )
