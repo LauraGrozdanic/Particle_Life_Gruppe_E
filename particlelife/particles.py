@@ -1,5 +1,5 @@
 import numpy as np
-from .interaction import compute_interaction_direction
+# from .interaction import compute_interaction_direction
 
 class Particles:
     def __init__ (self, n_points=1000):
