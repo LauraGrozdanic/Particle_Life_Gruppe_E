@@ -1,4 +1,4 @@
-from vispy import app, scene
+from vispy import scene
 from vispy.app import Timer
 import numpy as np
 from .particles import Particles
