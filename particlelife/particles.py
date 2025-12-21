@@ -30,3 +30,11 @@ class Particles:
         self.x += self.vx
         self.y += self.vy
         return self.x, self.y
+    
+    #wenn PArtikel den Rand verlassen, kommen sie auf der gegenüberliegenden Seite wieder
+    def wrap_around(self, xmin, xmax, ymin, ymax):
+        width = xmax - xmin
+        height = ymax - ymin
+
+        self.x = ((self.x - xmin) % width) + xmin
+        self.y = ((self.y - ymin) % height) + ymin
