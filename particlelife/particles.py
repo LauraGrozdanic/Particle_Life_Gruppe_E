@@ -17,7 +17,7 @@ class Particles:
         np.random.shuffle(self.types)
         
         self.colors = np.array([
-            [0.0, 0.0, 1.0],  # Typ0:blue
+            [0.0, 0.8, 0.8],  # Typ0:turquoise
             [1.0, 0.0, 0.0],  # Typ1:red
             [0.0, 1.0, 0.0],  # Typ2:green
             [1.0, 1.0, 0.0],  # Typ3:yellow
