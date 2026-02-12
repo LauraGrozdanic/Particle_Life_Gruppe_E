@@ -1,15 +1,15 @@
 import numpy as np
-# from .interaction import compute_interaction_direction
+from .interaction import compute_interaction_direction
 
 class Particles:
+    def __init__ (self, n_points=300):
+    
     """
     The class stores particle positions, velocities and particle types.
     It also provides simple motion update utilities:
     - "diffuse" adds random difussion and applies the current velocity
     - "wrap_around" applies periodic boundary conditions
     """
-
-    def __init__ (self, n_points=1000):
         self.n_points = n_points
 
         # Random start positions around (0, 0), scale=10 -> controls how spread out they are
@@ -46,10 +46,40 @@ class Particles:
         self.y += self.vy
         return self.x, self.y
     
+    def apply_interactions(self,
+                           max_distance=50,
+                           interaction_strength=1.0,
+                           friction=0.95):
+        
+        n = self.n_points
+        positions = np.column_stack((self.x, self.y))
+
+        for i in range(n):
+            total_force = np.zeros(2)
+
+            for j in range(n): 
+                if i == j: 
+                    continue
+
+                total_force += compute_interaction_direction(
+                    positions[i],
+                    positions[j],
+                    self.types[i],
+                    self.types[j],
+                    max_distance=max_distance,
+                    interaction_strength=interaction_strength
+                )
+
+            self.vx[i] += 0.01 * total_force[0]
+            self.vy[i] += 0.01 * total_force[1]
+
+        # Apply frinction
+        self.vx *= friction
+        self.vy *= friction
+
     def wrap_around(self, xmin, xmax, ymin, ymax):
         """
         Apply periodic boundary conditons.
-
         If a particle leaves the siumlation bounds on one side, it re-enters on the opposite side.
         This keeps all particles within the square.
         """
