@@ -49,11 +49,18 @@ class Visualization(QMainWindow):
 
         self.view.add(self.scatter)
 
-        self.timer = Timer(interval=0.02, connect=self.update, start=True)
+        self.timer = Timer(interval=0.01, connect=self.update, start=True)
 
     def update(self, event):
+
+        self.particles.apply_interactions(
+            max_distance=50,
+            interaction_strength=0.04,
+            friction=0.995
+        )
+
         # Partikel bewegen
-        x, y = self.particles.diffuse(0.2)
+        x, y = self.particles.diffuse(0.01)
 
         #warp around an den Rändern anwenden
         self.particles.wrap_around(self.xmin, self.xmax, self.ymin, self.ymax)

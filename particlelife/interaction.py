@@ -3,15 +3,17 @@
 import numpy as np
 
 INTERACTION_MATRIX = np.array([
-    [ 0.0,  1.0, -1.0,  0.0],  # Typ 0 reagiert so auf 0,1,2,3
-    [-1.0,  0.0,  1.0,  0.0],  # Typ 1
-    [ 1.0, -1.0,  0.0,  0.0],  # Typ 2
-    [ 0.0,  0.0,  0.0,  0.0],  # Typ 3 (neutral)
+    #        0 (Türkis)  1 (Rot)   2 (Grün)  3 (Gelb)
+    [  0.3,  -0.4,       0.5,     -0.2],   # 0 = Türkis
+    [ -0.2,   0.3,      -0.4,      0.5],   # 1 = Rot
+    [  0.5,  -0.2,       0.3,     -0.4],   # 2 = Grün
+    [ -0.4,   0.5,      -0.2,      0.3],   # 3 = Gelb
 ])
 
 def compute_interaction_direction(pos_i, pos_j, type_i, type_j,
                                   matrix=INTERACTION_MATRIX,
-                                  max_distance=50):
+                                  max_distance=50,
+                                  interaction_strength=1.0):
 
     delta = pos_j - pos_i
     distance = np.linalg.norm(delta)
@@ -23,10 +25,18 @@ def compute_interaction_direction(pos_i, pos_j, type_i, type_j,
     direction = delta / distance
 
     # Stärke aus Matrix
-    strength = matrix[type_i][type_j]
+    strength = matrix[type_i][type_j] * interaction_strength
 
-    # Effekt stärker, wenn Partikel nah sind
-    factor = (1 - distance / max_distance)
+
+    r = distance / max_distance
+
+    if r < 0.15:
+        factor = -1.0                 # starke Abstoßung sehr nah
+    elif r < 0.6:
+        factor = 0.8 * (0.6 - r)      # Anziehung im Mittelbereich
+    else:
+        factor = 0.0                  # keine Wirkung weit weg
+     
 
     return direction * strength * factor
 
