@@ -1,35 +1,36 @@
 import numpy as np
 from .interaction import compute_interaction_direction
 
+
 class Particles:
-    def __init__ (self, n_points=300):
-    
-    """
-    The class stores particle positions, velocities and particle types.
-    It also provides simple motion update utilities:
-    - "diffuse" adds random difussion and applies the current velocity
-    - "wrap_around" applies periodic boundary conditions
-    """
+    def __init__(self, n_points=300):
+        """
+        The class stores particle positions, velocities and particle types.
+        It also provides simple motion update utilities:
+        - "diffuse" adds random difussion and applies the current velocity
+        - "wrap_around" applies periodic boundary conditions
+        """
         self.n_points = n_points
 
         # Random start positions around (0, 0), scale=10 -> controls how spread out they are
         self.x = np.random.normal(loc=0.0, scale=10.0, size=n_points)
         self.y = np.random.normal(loc=0.0, scale=10.0, size=n_points)
-        
+
         # Start with zero velocity
         self.vx = np.zeros(n_points)
         self.vy = np.zeros(n_points)
 
-       
         self.types = np.repeat(np.arange(4), n_points // 4)
         np.random.shuffle(self.types)
-        
-        self.colors = np.array([
-            [0.0, 1.0, 1.0],  # Typ0:turquoise
-            [1.0, 0.0, 0.0],  # Typ1:red
-            [0.0, 1.0, 0.0],  # Typ2:green
-            [1.0, 1.0, 0.0],  # Typ3:yellow
-        ])
+
+        self.colors = np.array(
+            [
+                [0.0, 1.0, 1.0],  # Typ0:turquoise
+                [1.0, 0.0, 0.0],  # Typ1:red
+                [0.0, 1.0, 0.0],  # Typ2:green
+                [1.0, 1.0, 0.0],  # Typ3:yellow
+            ]
+        )
 
     def diffuse(self, n_step=0.1):
         """
@@ -45,20 +46,18 @@ class Particles:
         self.x += self.vx
         self.y += self.vy
         return self.x, self.y
-    
-    def apply_interactions(self,
-                           max_distance=50,
-                           interaction_strength=1.0,
-                           friction=0.95):
-        
+
+    def apply_interactions(
+        self, max_distance=50, interaction_strength=1.0, friction=0.95
+    ):
         n = self.n_points
         positions = np.column_stack((self.x, self.y))
 
         for i in range(n):
             total_force = np.zeros(2)
 
-            for j in range(n): 
-                if i == j: 
+            for j in range(n):
+                if i == j:
                     continue
 
                 total_force += compute_interaction_direction(
@@ -67,7 +66,7 @@ class Particles:
                     self.types[i],
                     self.types[j],
                     max_distance=max_distance,
-                    interaction_strength=interaction_strength
+                    interaction_strength=interaction_strength,
                 )
 
             self.vx[i] += 0.01 * total_force[0]
