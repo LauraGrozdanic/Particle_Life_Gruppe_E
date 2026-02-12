@@ -31,23 +31,11 @@ class Visualization(QMainWindow):
         # Partikel
         self.particles = Particles()
 
-        #TEST wrap around
-        # self.particles.x[0] = self.xmax - 1  
-        # self.particles.y[0] = 0
-        # self.particles.vx[0] = 2.0            
-        # self.particles.vy[0] = 0.0
-
         x = self.particles.x
         y = self.particles.y
 
         types = self.particles.types
         face_colors = self.particles.colors[types]
-
-        # DEBUG
-        print("x shape:", x.shape)
-        print("y shape:", y.shape)
-        print("combined shape:", np.column_stack((x, y)).shape)
-
 
         self.scatter = scene.visuals.Markers()
 
