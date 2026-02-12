@@ -6,7 +6,7 @@ def test_wrap_around():
     p = Particles(n_points=3)
 
     # 3 Partikel absichtlich außerhalb setzen
-    p.x = np.array([-5.0, 5.0, 15.0])
+    p.x = np.array([-5.0, -1.0, 15.0])
     p.y = np.array([-10.0, 0.0, 10.0])
 
     # linke und rechte Grenze setzen
