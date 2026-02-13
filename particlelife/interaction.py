@@ -30,14 +30,15 @@ def compute_interaction_direction(pos_i, pos_j, type_i, type_j,
 
     r = distance / max_distance
 
-    if r < 0.15:
-        factor = -1.0                 # starke Abstoßung sehr nah
-    elif r < 0.6:
-        factor = 0.8 * (0.6 - r)      # Anziehung im Mittelbereich
+    if r < 0.1:
+        factor = -2.0 * (0.1 - r)        # starke Repulsion
+    elif r < 0.4:
+        factor = 1.5 * (r - 0.1)         # Attraction
+    elif r < 0.7:
+        factor = -0.5 * (r - 0.4)        # leichte Repulsion
     else:
-        factor = 0.0                  # keine Wirkung weit weg
+        factor = 0.0
      
-
     return direction * strength * factor
 
 
