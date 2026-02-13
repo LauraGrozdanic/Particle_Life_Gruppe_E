@@ -56,12 +56,12 @@ class Visualization(QMainWindow):
 
         self.particles.apply_interactions(
             max_distance=50,
-            interaction_strength=0.04,
+            interaction_strength=0.03,
             friction=0.995
         )
 
         # move Particles
-        x, y = self.particles.diffuse(0.01)
+        x, y = self.particles.diffuse(0.05)
 
         # Use wrap around if Particles go out of bounds
         self.particles.wrap_around(self.xmin, self.xmax, self.ymin, self.ymax)
