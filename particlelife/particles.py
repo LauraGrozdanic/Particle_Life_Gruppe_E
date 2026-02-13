@@ -1,5 +1,5 @@
 import numpy as np
-from .interaction import compute_interaction_direction, INTERACTION_MATRIX
+from .interaction import INTERACTION_MATRIX
 from numba import njit
 
 @njit
