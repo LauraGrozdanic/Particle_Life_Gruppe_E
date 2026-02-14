@@ -1,50 +1,8 @@
 import numpy as np
-from .interaction import INTERACTION_MATRIX
-from numba import njit
-
-@njit
-def compute_forces(x, y, types, matrix, max_distance, interaction_strength):
-    n = len(x)
-
-    fx = np.zeros(n)
-    fy = np.zeros(n)
-
-    for i in range(n):
-        for j in range(n):
-            if i == j:
-                continue
-
-            dx = x[j] - x[i]
-            dy = y[j] - y[i]
-            distance = np.sqrt(dx*dx + dy*dy)
-
-            if distance == 0.0 or distance > max_distance:
-                continue
-
-            direction_x = dx / distance
-            direction_y = dy / distance
-
-            strength = matrix[types[i], types[j]] * interaction_strength
-
-            r = distance / max_distance
-
-            if r < 0.15:
-                factor = -1.0
-            elif r < 0.6:
-                factor = 0.8 * (0.6 - r)
-            else:
-                factor = 0.0
-
-            force = strength * factor
-
-            fx[i] += direction_x * force
-            fy[i] += direction_y * force
-
-    return fx, fy
-
+from .interaction import INTERACTION_MATRIX, compute_forces
 
 class Particles:
-    def __init__ (self, n_points=300):
+    def __init__ (self, n_points=1000):
     
         """
         The class stores particle positions, velocities and particle types.
