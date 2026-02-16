@@ -9,17 +9,20 @@ Uses Numba (@njit) to run faster.
 import numpy as np
 from numba import njit
 
-# types: 0=Turq, 1=Red, 2=Green, 3=Yellow
-INTERACTION_MATRIX = np.array([
-        [-0.3,  0.2, -0.1,  0.4], # Turquoise reacts to (Turq, Red, Green, Yellow)
-        [ 0.1, -0.3,  0.3, -0.2], # Red reacts to (Turq, Red, Green, Yellow)
-        [-0.4,  0.1, -0.3,  0.2], # Green reacts to (Turq, Red, Green, Yellow)
-        [ 0.3, -0.4,  0.2, -0.3], # Yellow reacts to (Turq, Red, Green, Yellow)
-])
+# types: 0=Purple, 1=Red, 2=Green, 3=Yellow
+INTERACTION_MATRIX = np.array(
+    [
+        [-0.3, 0.2, -0.1, 0.4],  # Purple reacts to (Purple, Red, Green, Yellow)
+        [0.1, -0.3, 0.3, -0.2],  # Red reacts to (Purple, Red, Green, Yellow)
+        [-0.4, 0.1, -0.3, 0.2],  # Green reacts to (Purple, Red, Green, Yellow)
+        [0.3, -0.4, 0.2, -0.3],  # Yellow reacts to (Purple, Red, Green, Yellow)
+    ]
+)
+
 
 @njit
 def compute_forces(x, y, types, matrix, max_distance, interaction_strength):
-    """ 
+    """
     Calculate the force (fx, fy) on each particle from all other particles.
     Only particles closer than max_distance interact.
     """
@@ -35,7 +38,7 @@ def compute_forces(x, y, types, matrix, max_distance, interaction_strength):
             dx = x[j] - x[i]
             dy = y[j] - y[i]
 
-            distance = np.sqrt(dx*dx + dy*dy)
+            distance = np.sqrt(dx * dx + dy * dy)
 
             if distance == 0.0 or distance > max_distance:
                 continue
@@ -59,6 +62,3 @@ def compute_forces(x, y, types, matrix, max_distance, interaction_strength):
             fy[i] += direction_y * force
 
     return fx, fy
-
-
-
