@@ -1,9 +1,9 @@
 import numpy as np
 from .interaction import INTERACTION_MATRIX, compute_forces
 
+
 class Particles:
-    def __init__ (self, n_points=1000):
-    
+    def __init__(self, n_points=1000):
         """
         The class stores particle positions, velocities and particle types.
         It also provides simple motion update utilities:
@@ -15,21 +15,22 @@ class Particles:
         # Random start positions around (0, 0), scale=10 -> controls how spread out they are
         self.x = np.random.normal(loc=0.0, scale=10.0, size=n_points)
         self.y = np.random.normal(loc=0.0, scale=10.0, size=n_points)
-        
+
         # Start with zero velocity
         self.vx = np.zeros(n_points)
         self.vy = np.zeros(n_points)
 
-       
         self.types = np.repeat(np.arange(4), n_points // 4)
         np.random.shuffle(self.types)
-        
-        self.colors = np.array([
-            [0.0, 1.0, 1.0],  # Typ0:turquoise
-            [1.0, 0.0, 0.0],  # Typ1:red
-            [0.0, 1.0, 0.0],  # Typ2:green
-            [1.0, 1.0, 0.0],  # Typ3:yellow
-        ])
+
+        self.colors = np.array(
+            [
+                [0.85, 0.70, 1.00],  # Typ0:purple
+                [1.0, 0.0, 0.0],  # Typ1:red
+                [0.0, 1.0, 0.0],  # Typ2:green
+                [1.0, 1.0, 0.0],  # Typ3:yellow
+            ]
+        )
 
     def diffuse(self, n_step=0.1):
         """
@@ -45,12 +46,10 @@ class Particles:
         self.x += self.vx
         self.y += self.vy
         return self.x, self.y
-    
-    def apply_interactions(self,
-                           max_distance=50,
-                           interaction_strength=1.0,
-                           friction=0.95):
-        
+
+    def apply_interactions(
+        self, max_distance=50, interaction_strength=1.0, friction=0.95
+    ):
         fx, fy = compute_forces(
             self.x,
             self.y,
@@ -66,7 +65,6 @@ class Particles:
         # friction
         self.vx *= friction
         self.vy *= friction
- 
 
     def wrap_around(self, xmin, xmax, ymin, ymax):
         """
