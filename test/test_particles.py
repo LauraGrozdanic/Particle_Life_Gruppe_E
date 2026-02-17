@@ -5,20 +5,21 @@ from particlelife.particles import Particles
 def test_wrap_around():
     p = Particles(n_points=3)
 
-    # 3 Partikel absichtlich außerhalb setzen
+    # set 3 particles out of bounds
     p.x = np.array([-5.0, -1.0, 15.0])
     p.y = np.array([-10.0, 0.0, 10.0])
 
-    # linke und rechte Grenze setzen
+    # set left and right border
     xmin, xmax = 0.0, 10.0
-    # obere und untere Grenze setzen
+    # set upper and lower border
     ymin, ymax = -5.0, 5.0
 
     p.wrap_around(xmin, xmax, ymin, ymax)
 
-    # testen ob alle wieder im Bereich sind
+    # test if all particles are inside the borders
     assert np.all(p.x >= xmin) and np.all(p.x < xmax)
     assert np.all(p.y >= ymin) and np.all(p.y < ymax)
+
 
 def test_diffuse():
     # Creates 2 particles
@@ -38,6 +39,6 @@ def test_diffuse():
     expected_x = np.array([1.0, -1.0])
     expected_y = np.array([10.5, 20.0])
 
-    # check if it matches exactly 
+    # check if it matches exactly
     assert (x_new == expected_x).all()
     assert (y_new == expected_y).all()
