@@ -19,14 +19,55 @@ INTERACTION_MATRIX = np.array(
     ]
 )
 
+"""
+Interaction matrix: defines how each particle type reacts
+to each other. Positive values attract, negative values repel.
+"""
 
 @njit
 def compute_forces(x, y, types, matrix, max_distance, interaction_strength):
+
     """
-    Calculate the force (fx, fy) on each particle from all other particles.
-    Only particles closer than max_distance interact.
+    Computes the interaction forces between all particles.
+
+    For each particle pair (i, j), a force is calculated based on:
+
+    1. Distance:
+       - Only particles that are closer than max_distance interact.
+       - Distance normalized as r = distance / max_distance.
+
+    2. Particle types:
+       - Interaction matrix defines attraction (positive) or repulsion (negative) between types.
+       - Value is scaled by interaction_strength.
+
+    3. Distance zones:
+       - r < 0.15  - strong repulsion (avoids overlap)
+       - r < 0.6   - attraction (particles move to each other)
+       - r >= 0.6  - weak repulsion in long range (prevents large clusters)
+
+    The force that results is added to fx and fy for each particle.
+
+    Parameters:
+
+    x, y: np.ndarray
+        Arrays containing the particle positions.
+    types: np.ndarray
+        Array with the particle type index (0–3).
+    matrix: np.ndarray
+        Interaction matrix defines attraction/repulsion.
+    max_distance: float
+        Maximum interaction range.
+    interaction_strength: float
+        Global scaling factor for all interaction forces.
+
+    Returns:
+
+    fx, fy: np.ndarray
+        The total force applied to each particle in x and y.
     """
+    
     n = len(x)
+
     fx = np.zeros(n)
     fy = np.zeros(n)
 
