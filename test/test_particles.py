@@ -21,7 +21,7 @@ def test_wrap_around():
     assert np.all(p.y >= ymin) and np.all(p.y < ymax)
 
 def test_diffuse():
-    #Creates 2 particles
+    # Creates 2 particles
     p = Particles(n_points=2)
 
     # fixed start positions (nothing is random)
@@ -32,7 +32,7 @@ def test_diffuse():
     p.vx = np.array([1.0, -2.0])
     p.vy = np.array([0.5, 0.0])
 
-    # no random noise, only movement from vx(vy
+    # no random noise, only movement from vx/vy
     x_new, y_new = p.diffuse(n_step=0.0)
 
     expected_x = np.array([1.0, -1.0])
