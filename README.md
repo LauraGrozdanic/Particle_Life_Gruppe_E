@@ -7,6 +7,15 @@ This project was developed as part of the course Data Science & AI Infrastructur
 
 ![Demo](https://github.com/user-attachments/assets/9dfbaecb-e401-48e8-8ccc-b6517d86e899)
 
+## How to run this simulation
+### Prerequisites
+
+- `Python 3.10 (or newer)`
+- `VisPy`
+- `PyQt5`
+- `Numpy`
+- `Numba`
+
 
 ## Configuration 
 
