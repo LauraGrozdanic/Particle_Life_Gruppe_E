@@ -4,24 +4,46 @@ from particlelife.particles import Particles
 
 def test_wrap_around():
     p = Particles(n_points=3)
-    # 3 particles placed intentionally outside the boundaries
+
+    # set 3 particles out of bounds
     p.x = np.array([-5.0, -1.0, 15.0])
     p.y = np.array([-10.0, 0.0, 10.0])
-    # set left and right boundaries
+
+    # set left and right border
     xmin, xmax = 0.0, 10.0
-    # set upper and lower boundaries
+    # set upper and lower border
     ymin, ymax = -5.0, 5.0
+    
     p.wrap_around(xmin, xmax, ymin, ymax)
 
-    # test if all particles are inside the boundaries
+    # test if all particles are inside the borders
     assert np.all(p.x >= xmin) and np.all(p.x < xmax)
     assert np.all(p.y >= ymin) and np.all(p.y < ymax)
   
-#=======================second test ====================================================
-"""
-    If interaction_strength is 0 and friction is 1,
-    velocities must stay exactly the same.
-"""
+
+def test_diffuse():
+    # Creates 2 particles
+    p = Particles(n_points=2)
+
+    # fixed start positions (nothing is random)
+    p.x = np.array([0.0, 1.0])
+    p.y = np.array([10.0, 20.0])
+
+    # fixed velocities
+    p.vx = np.array([1.0, -2.0])
+    p.vy = np.array([0.5, 0.0])
+
+    # no random noise, only movement from vx/vy
+    x_new, y_new = p.diffuse(n_step=0.0)
+
+    expected_x = np.array([1.0, -1.0])
+    expected_y = np.array([10.5, 20.0])
+
+    # check if it matches exactly
+    assert (x_new == expected_x).all()
+    assert (y_new == expected_y).all()
+
+    
 def test_interactions_no_change_when_no_force_and_friction():
     # Create 3 particles
     p = Particles(n_points=3)
@@ -39,12 +61,7 @@ def test_interactions_no_change_when_no_force_and_friction():
     assert np.allclose(p.vx, np.array([1.0, -2.0, 3.0]))
     assert np.allclose(p.vy, np.array([4.0, -5.0, 6.0]))
 
-#=======================third test ====================================================
 
-"""
-If two particles are close enough and interaction_strength > 0,
-their velocities should change.
-"""
 def test_apply_interactions_creates_velocity():
     # Create 2 particles
     p = Particles(n_points=2)

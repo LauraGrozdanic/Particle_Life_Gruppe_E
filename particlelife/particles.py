@@ -3,7 +3,7 @@ from .interaction import INTERACTION_MATRIX, compute_forces
 
 
 class Particles:
-    def __init__(self, n_points=1000):
+    def __init__(self, n_points=1500):
         """
         The class stores particle positions, velocities and particle types.
         It also provides simple motion update utilities:
@@ -50,6 +50,27 @@ class Particles:
     def apply_interactions(
         self, max_distance=50, interaction_strength=1.0, friction=0.95
     ):
+        
+        """
+        calculation and application of interaction forces between particles. 
+
+        Particles influence each other depending on their type and distance.
+        Forces are computed using the interaction matrix and added to
+        the particle velocities.
+
+        friction factor is used to slow down the movement and keep
+        the simulation stable.
+
+        Parameters:
+
+        max_distance: float
+            Maximum distance at which particles affect each other.
+        interaction_strength: float
+            Controls how strong the interaction forces are.
+        friction: float
+            Reduces velocity each step to avoid instability. 
+        """
+
         fx, fy = compute_forces(
             self.x,
             self.y,
