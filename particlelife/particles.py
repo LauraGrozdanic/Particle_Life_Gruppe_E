@@ -3,7 +3,7 @@ from .interaction import INTERACTION_MATRIX, compute_forces
 
 
 class Particles:
-    def __init__(self, n_points=1500):
+    def __init__(self, n_points, friction):
         """
         The class stores particle positions, velocities and particle types.
         It also provides simple motion update utilities:
@@ -11,6 +11,7 @@ class Particles:
         - "wrap_around" applies periodic boundary conditions
         """
         self.n_points = n_points
+        self.friction = friction
 
         # Random start positions around (0, 0), scale=10 -> controls how spread out they are
         self.x = np.random.normal(loc=0.0, scale=10.0, size=n_points)
@@ -48,8 +49,7 @@ class Particles:
         return self.x, self.y
 
     def apply_interactions(
-        self, max_distance=50, interaction_strength=1.0, friction=0.95
-    ):
+        self, max_distance=50, interaction_strength=1.0):
         
         """
         calculation and application of interaction forces between particles. 
@@ -84,8 +84,8 @@ class Particles:
         self.vy += 0.01 * fy
 
         # friction
-        self.vx *= friction
-        self.vy *= friction
+        self.vx *= self.friction
+        self.vy *= self.friction
 
     def wrap_around(self, xmin, xmax, ymin, ymax):
         """

@@ -33,7 +33,8 @@ class Visualization(QMainWindow):
         )
 
         # Make a particle system
-        self.particles = Particles()
+        # setting n_points and friction
+        self.particles = Particles(n_points=1500, friction=0.995)
 
         x = self.particles.x
         y = self.particles.y
@@ -56,8 +57,7 @@ class Visualization(QMainWindow):
 
         self.particles.apply_interactions(
             max_distance=50,
-            interaction_strength=0.03,
-            friction=0.995
+            interaction_strength=0.03
         )
 
         # move Particles
