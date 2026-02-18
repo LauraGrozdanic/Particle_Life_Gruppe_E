@@ -5,6 +5,7 @@ This project is a biology-inspired particle simulation that demonstrates emergen
 
 This project was developed as part of the course Data Science & AI Infrastructures with a strong focus on professional Python software development.
 
+![IMAGE](https://github.com/user-attachments/assets/9dfbaecb-e401-48e8-8ccc-b6517d86e899)
 
 
 ## Configuration 
@@ -28,3 +29,4 @@ The number of particles can be changed in the particle class n_point=number of p
   class Particles: 
       def __init__(self, n_points=1000):
 ```
+
