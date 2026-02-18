@@ -39,3 +39,12 @@ The number of particles can be changed in the particle class n_point=number of p
       def __init__(self, n_points=1000):
 ```
 
+## Running Tests 
+
+```bash
+# Run all tests
+pytest
+
+# Run linter
+ruff check
+```
