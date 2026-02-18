@@ -49,28 +49,15 @@ The number of particles can be changed in the particle class n_point=number of p
       def __init__(self, n_points=1000):
 ```
 ## Code Structure Description
-The project is divided into several Python modules. Each module has a specific task, and together they form the complete simulation. 
-
-In this report, we focus on the test files and the modules inside the Particle Life directory. The simulation is started through play.py, which runs the whole system. 
-
-The Particle Life directory contains the main code of the simulation. It includes three modules: interaction.py, particles.py, and visualization.py. These files are connected through imports and work together to run the simulation. 
-
-**Interaction.py**
-
+### Interaction.py
 This file handles the force calculation between particles. It defines how particle types attract or repel each other and computes the resulting forces.
 
-**Particle.py**
-
+### Particle.py
 This file defines and manages the particle system. It stores particle positions, velocities, types, and colors, updates their movement, applies interaction forces, adds friction, and ensures particles stay inside the simulation area.
 
-**Visualization.py**
+### Visualization.py
 
 This file is responsible for displaying and animating the simulation. It creates the window, shows the particles, and continuously updates their movement on the screen.
-
-**test files**
-The test files ensure that the simulation works correctly. test_interaction.py verifies the force calculation and checks that no interaction happens when particles are too far apart. test_particles.py verifies particle movement, boundary behavior, and interaction logic.
-
- 
 
 ## Running Tests 
 
