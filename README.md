@@ -1,6 +1,5 @@
-# Particle Simulator 
+# Particle Simulator
 
-## Description
 This project is a biology-inspired particle simulation that demonstrates emergent behavior through simple interaction rules. Thousands of particles of different types move, attract or repel each other and form visually complex patterns in real time.
 
 This project was developed as part of the course Data Science & AI Infrastructures with a strong focus on professional Python software development.
@@ -48,7 +47,11 @@ The number of particles can be changed in the particle class n_point=number of p
   class Particles: 
       def __init__(self, n_points=1000):
 ```
-## Code Structure Description
+## Code Structure
+
+<img width="548" height="743" alt="image" src="https://github.com/user-attachments/assets/8131fc77-4477-44b4-8c13-837e2185ff28" />
+
+
 ### Interaction.py
 This file handles the force calculation between particles. It defines how particle types attract or repel each other and computes the resulting forces.
 
