@@ -57,33 +57,20 @@ The Particle Life directory contains the main code of the simulation. It include
 
 **Interaction.py**
 
-The file interaction.py contains the logic for calculating the forces between particles. In this file, an interaction matrix is defined. This matrix describes how the four different particle types influence each other. Depending on the values in the matrix, particles either attract or repel each other. 
-
-The main function in this file is compute_forces(). This function calculates the force components (fx, fy) acting on each particle. It computes the distance between particles, checks whether they are close enough to interact, applies the interaction rules from the matrix, and then returns the resulting forces for all particles. 
+This file handles the force calculation between particles. It defines how particle types attract or repel each other and computes the resulting forces.
 
 **Particle.py**
 
-The file particles.py defines the Particles class and manages the whole particle system. It imports the force calculation from interaction.py so that particles can influence each other. 
-
-In this file, the positions, velocities, types, and colors of all particles are stored. The file controls how the particles move over time. It updates their positions, changes their velocities based on interaction forces, and applies friction to slow them down gradually. 
-
-It also makes sure that particles stay inside the simulation area. If a particle leaves one side of the area, it reappears on the opposite side. In addition, small random movement is added to simulate natural motion. 
+This file defines and manages the particle system. It stores particle positions, velocities, types, and colors, updates their movement, applies interaction forces, adds friction, and ensures particles stay inside the simulation area.
 
 **Visualization.py**
 
-The file visualization.py is responsible for displaying and animating the particle simulation. It imports the Particles class to access the particle system. 
-In this file, a main window is created and the simulation area is defined. The particles are displayed as colored points on the screen. The file continuously updates the simulation by applying the particle interactions, moving the particles, keeping them inside the boundaries, and refreshing their positions on the screen. This creates a smooth and continuous animation. 
+This file is responsible for displaying and animating the simulation. It creates the window, shows the particles, and continuously updates their movement on the screen.
 
 **test files**
-The test files check if the simulation works correctly and make sure that the main parts of the system behave as expected. 
-There are two test files: test_interaction.py and test_particles.py. 
-**test_interaction.py**
+The test files ensure that the simulation works correctly. test_interaction.py verifies the force calculation and checks that no interaction happens when particles are too far apart. test_particles.py verifies particle movement, boundary behavior, and interaction logic.
 
-The file test_interaction.py tests the force calculation from interaction.py. It checks that the calculated forces do not contain invalid values like NaN or infinity. It also verifies that particles do not interact when they are too far apart. In that case, the forces must be zero. 
-
-**test_particles.py**
-
-The file test_particles.py tests the Particles class from particles.py. It checks the movement of particles, their interactions, and their boundary behavior. The tests make sure that particles stay inside the simulation area, that velocities remain the same when there is no force and no friction, and that velocities change when particles are close and interaction is active. 
+ 
 
 ## Running Tests 
 
