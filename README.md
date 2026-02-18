@@ -5,8 +5,7 @@ This project is a biology-inspired particle simulation that demonstrates emergen
 
 This project was developed as part of the course Data Science & AI Infrastructures with a strong focus on professional Python software development.
 
-![Demo](assets/particle_simulation.mp4)
-
+![Demo](https://github.com/user-attachments/assets/9dfbaecb-e401-48e8-8ccc-b6517d86e899)
 
 
 ## Configuration 
