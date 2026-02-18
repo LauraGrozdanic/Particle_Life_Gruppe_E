@@ -16,6 +16,16 @@ This project was developed as part of the course Data Science & AI Infrastructur
 - `Numpy`
 - `Numba`
 
+Clone the repository:
+```bash
+git clone https://github.com/LauraGrozdanic/Particle_Life_Gruppe_E.git 
+cd Particle_Life_Gruppe_E
+```
+
+Run the simulation:
+```bash
+python play.py
+```
 
 ## Configuration 
 
